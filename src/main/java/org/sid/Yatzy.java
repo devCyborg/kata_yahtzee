@@ -329,17 +329,7 @@ public class Yatzy {
     		return 0;
     	}
     }
-
-
-    private static int[] initCountsArrray(int d1, int d2, int d3, int d4, int d5) {
-        int[] counts = new int[6];
-        counts[d1 - 1]++;
-        counts[d2 - 1]++;
-        counts[d3 - 1]++;
-        counts[d4 - 1]++;
-        counts[d5 - 1]++;
-        return counts;
-    }
+    
     
     /**
      * 	calculate sum of element x in dices
@@ -375,18 +365,6 @@ public class Yatzy {
     	return Arrays.stream(this.dice).filter(e -> e == x).sum();
     }
     
-    /**
-     * check if each element exists one 
-     * @param tallies
-     * @param starterIndex
-     * @param result
-     * @return
-     */
-    private static int largeSmallStraight(int[] tallies, int starterIndex, int result) {
-        if (tallies[0 + starterIndex] == 1 && tallies[1 + starterIndex] == 1 && tallies[2 + starterIndex] == 1 && tallies[3] == 1 && tallies[4 + starterIndex] == 1)
-            return result;
-        return 0;
-    }
     /**
      * getMapsNumberOfDuplicateElementsDices
      * key : element of dices
