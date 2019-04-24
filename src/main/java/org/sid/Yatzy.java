@@ -3,7 +3,6 @@ package org.sid;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -17,13 +16,18 @@ public class Yatzy {
 	private int[] dice;
     
 	/**
-	 * value of score if equals number dices
+	 * score for equals number dices
 	 */
-    private static final int RESULT_ALL_EQUALS_NUMBER = 50;
+    private static final int POINTS_ALL_EQUALS_NUMBER = 50;
+    /**
+     * score for SMALL STRAIGHT
+     */
+    private static final int POINTS_SMALL_STRAIGHT = 15;
     
-    private static final int POINT_SMALL_STRAIGHT = 15;
-    
-    private static final int POINT_LARGE_STRAIGHT = 20;
+    /**
+     * score for LARGE STRAIGHT
+     */
+    private static final int POINTS_LARGE_STRAIGHT = 20;
     
 
     public Yatzy(int d1, int d2, int d3, int d4, int d5) {
@@ -50,7 +54,7 @@ public class Yatzy {
      */
     public static int yatzy(int... dice) {
     	if (dice[0]==dice[1] && dice[0]==dice[2] && dice[0]==dice[3]&& dice[0]==dice[4]) {
-    		 return RESULT_ALL_EQUALS_NUMBER;
+    		 return POINTS_ALL_EQUALS_NUMBER;
     	}else {
     		return 0;
     	}
@@ -277,7 +281,7 @@ public class Yatzy {
      */
     public static int smallStraight(int d1, int d2, int d3, int d4, int d5) {
     	if (Stream.of(d1,d2,d3,d4,d5).distinct().count()==5) {
-    		return POINT_SMALL_STRAIGHT;
+    		return POINTS_SMALL_STRAIGHT;
     	}else {
     		return 0;
     	}
@@ -293,7 +297,7 @@ public class Yatzy {
      */
     public static int largeStraight(int d1, int d2, int d3, int d4, int d5) {
     	if (Stream.of(d1,d2,d3,d4,d5).filter(d -> d>=2).distinct().count()==5) {
-    		return POINT_LARGE_STRAIGHT;
+    		return POINTS_LARGE_STRAIGHT;
     	}else {
     		return 0;
     	}
