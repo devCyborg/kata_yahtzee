@@ -266,23 +266,37 @@ public class Yatzy {
     	return totalElements.get()*3;
     }
     /**
-     * suite of number
+     * sequence number (not max)
      * @param d1
      * @param d2
      * @param d3
      * @param d4
      * @param d5
      * @return
-     * 	result 15 
+     * 		result 15 
      */
     public static int smallStraight(int d1, int d2, int d3, int d4, int d5) {
-        int[] tallies = initCountsArrray(d1, d2, d3, d4, d5);
-        return largeSmallStraight(tallies, 0, POINT_SMALL_STRAIGHT);
+    	if (Stream.of(d1,d2,d3,d4,d5).distinct().count()==5) {
+    		return POINT_SMALL_STRAIGHT;
+    	}else {
+    		return 0;
+    	}
     }
-
+    /**
+     * sequence number max
+     * @param d1
+     * @param d2
+     * @param d3
+     * @param d4
+     * @param d5
+     * @return
+     */
     public static int largeStraight(int d1, int d2, int d3, int d4, int d5) {
-        int[] tallies = initCountsArrray(d1, d2, d3, d4, d5);
-        return largeSmallStraight(tallies, 1, POINT_LARGE_STRAIGHT);
+    	if (Stream.of(d1,d2,d3,d4,d5).filter(d -> d>=2).distinct().count()==5) {
+    		return POINT_LARGE_STRAIGHT;
+    	}else {
+    		return 0;
+    	}
     }
 
     /**
@@ -306,9 +320,9 @@ public class Yatzy {
     	Map<Integer, Long> result = getMapsNumberOfDuplicateElementsDices(d1, d2, d3, d4, d5);
    	
     	Optional<Integer> totalFullHouse = result.entrySet().stream()
-				 .filter(e -> e.getValue()==3 || e.getValue()==2) //save element repetition 2 et 3
-				 .map(e-> e.getKey())
-				 .reduce((x,y) -> x*3 +y* 2);
+														 	.filter(e -> e.getValue()==3 || e.getValue()==2) //save element repetition 2 et 3
+														 	.map(e-> e.getKey())
+														 	.reduce((x,y) -> x*3 +y* 2);
     	if (totalFullHouse.isPresent()) {
     		return totalFullHouse.get();
     	}else {
@@ -347,8 +361,6 @@ public class Yatzy {
     private static int sumXelementDices(int d1, int d2, int d3, int d4, int d5, int x) {
         int[] dice = {d1, d2, d3, d4, d5};
         
-        //TODO
-        Stream.of(d1, d2, d3, d4, d5).mapToInt(a->a).sum();
         return Arrays.stream(dice).filter(e -> e == x).sum();
     }
     
