@@ -11,8 +11,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Yatzy {
-    // pour  l'instant il n y a pas d'heritage
-    private int[] dice;
+	/**
+	 *  dices 
+	 */
+	private int[] dice;
+    
+	/**
+	 * value of score if equals number dices
+	 */
+    private static final int RESULT_ALL_EQUALS_NUMBER = 50;
 
     public Yatzy(int d1, int d2, int d3, int d4, int d5) {
         this.dice = new int[5];
@@ -22,7 +29,7 @@ public class Yatzy {
         this.dice[3] = d4;
         this.dice[4] = d5;
     }
-
+    
     public static int chance(int d1, int d2, int d3, int d4, int d5) {
         return d1 + d2 + d3 + d4 + d5;
 
@@ -38,13 +45,12 @@ public class Yatzy {
      */
     public static int yatzy(int... dice) {
     	if (dice[0]==dice[1] && dice[0]==dice[2] && dice[0]==dice[3]&& dice[0]==dice[4]) {
-    		 return 50;
+    		 return RESULT_ALL_EQUALS_NUMBER;
     	}else {
     		return 0;
     	}
         
     }
-
 
     public static int ones(int d1, int d2, int d3, int d4, int d5) {
         return genericCalculate(d1, d2, d3, d4, d5, 1);
@@ -119,7 +125,7 @@ public class Yatzy {
      * @return
      * 		score for two pairs
      */
-    public static int twoPair(int d1, int d2, int d3, int d4, int d5) {
+    public static int scoreTwoPair(int d1, int d2, int d3, int d4, int d5) {
     	
     	//get map of all element of stream "key : integer" and number that this element is duplicated "values : Long"
     	Map<Integer, Long> result = getMapsNumberOfDuplicateElementsDices(d1, d2, d3, d4, d5);
@@ -151,7 +157,7 @@ public class Yatzy {
      * @return
      * 		score for fourOfAKind
      */
-    public static int fourOfAKind(int d1, int d2, int d3, int d4, int d5) {
+    public static int scoreFourOfAKind(int d1, int d2, int d3, int d4, int d5) {
     	
     	//get map of all element of stream "key : integer" and number that this element is duplicated "values : Long"
     	Map<Integer, Long> result = getMapsNumberOfDuplicateElementsDices(d1, d2, d3, d4, d5);
@@ -168,8 +174,22 @@ public class Yatzy {
     		return 0;
     	}
     }
-
-    public static int threeOfAKind(int d1, int d2, int d3, int d4, int d5) {
+    /**
+     * score Three Of AKind 
+     * @param d1
+     * 		dice 1
+     * @param d2
+     * 		dice 2
+     * @param d3
+     * 		dice 3
+     * @param d4
+     * 		dice 4
+     * @param d5
+     * 		dice 5
+     * @return
+     * 		score 
+     */
+    public static int scoreThreeOfAKind(int d1, int d2, int d3, int d4, int d5) {
 
     	Map<Integer, Long> result = getMapsNumberOfDuplicateElementsDices(d1, d2, d3, d4, d5);
     		

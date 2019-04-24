@@ -71,24 +71,24 @@ public class YatzyTest {
 
     @Test
     public void two_Pair() {
-        assertEquals(16, Yatzy.twoPair(3,3,5,4,5));
-        assertEquals(16, Yatzy.twoPair(3,3,5,5,5));
+        assertEquals(16, Yatzy.scoreTwoPair(3,3,5,4,5));
+        assertEquals(16, Yatzy.scoreTwoPair(3,3,5,5,5));
     }
 
     @Test
     public void three_of_a_kind() 
     {
-        assertEquals(9, Yatzy.threeOfAKind(3,3,3,4,5));
-        assertEquals(15, Yatzy.threeOfAKind(5,3,5,4,5));
-        assertEquals(9, Yatzy.threeOfAKind(3,3,3,3,5));
-        assertEquals(9, Yatzy.threeOfAKind(3,3,3,3,3));
+        assertEquals(9, Yatzy.scoreThreeOfAKind(3,3,3,4,5));
+        assertEquals(15, Yatzy.scoreThreeOfAKind(5,3,5,4,5));
+        assertEquals(9, Yatzy.scoreThreeOfAKind(3,3,3,3,5));
+        assertEquals(9, Yatzy.scoreThreeOfAKind(3,3,3,3,3));
     }
 
     @Test
     public void four_of_a_knd() {
-        assertEquals(12, Yatzy.fourOfAKind(3,3,3,3,5));
-        assertEquals(20, Yatzy.fourOfAKind(5,5,5,4,5));
-        assertEquals(9, Yatzy.threeOfAKind(3,3,3,3,3));
+        assertEquals(12, Yatzy.scoreFourOfAKind(3,3,3,3,5));
+        assertEquals(20, Yatzy.scoreFourOfAKind(5,5,5,4,5));
+        assertEquals(9, Yatzy.scoreThreeOfAKind(3,3,3,3,3));
     }
 
     @Test
