@@ -20,6 +20,11 @@ public class Yatzy {
 	 * value of score if equals number dices
 	 */
     private static final int RESULT_ALL_EQUALS_NUMBER = 50;
+    
+    private static final int POINT_SMALL_STRAIGHT = 15;
+    
+    private static final int POINT_LARGE_STRAIGHT = 20;
+    
 
     public Yatzy(int d1, int d2, int d3, int d4, int d5) {
         this.dice = new int[5];
@@ -38,7 +43,7 @@ public class Yatzy {
     /**
      * 
      * @param dice
-     * 		tab of dices (params)
+     * 		tab of dices (params 5 elements) 
      * @return
      * 	 	if all values are equal return result = 50 
      * 		else resut = 0
@@ -51,30 +56,90 @@ public class Yatzy {
     	}
         
     }
-
+    /**
+     * calculate sum of 1
+     * @param d1
+     * 		dice 1
+     * @param d2
+     * 		dice 2
+     * @param d3
+     * 		dice 3
+     * @param d4
+     * 		dice 4 
+     * @param d5
+     * 		dice 5
+     * @return
+     * 	return sum of 1 
+     */
     public static int ones(int d1, int d2, int d3, int d4, int d5) {
-        return genericCalculate(d1, d2, d3, d4, d5, 1);
+        return sumXelementDices(d1, d2, d3, d4, d5, 1);
     }
-
+    /**
+     * calculate sum of 2
+     * @param d1
+     * 		dice 1
+     * @param d2
+     * 		dice 2
+     * @param d3
+     * 		dice 3
+     * @param d4
+     * 		dice 4 
+     * @param d5
+     * 		dice 5
+     * @return
+     * 	return sum of 2 
+     */
     public static int twos(int d1, int d2, int d3, int d4, int d5) {
-        return genericCalculate(d1, d2, d3, d4, d5, 2);
+        return sumXelementDices(d1, d2, d3, d4, d5, 2);
     }
-
+    
+    /**
+     * calculate sum of 3
+     * @param d1
+     * 		dice 1
+     * @param d2
+     * 		dice 2
+     * @param d3
+     * 		dice 3
+     * @param d4
+     * 		dice 4 
+     * @param d5
+     * 		dice 5
+     * @return
+     * 	return sum of 3
+     */
     public static int threes(int d1, int d2, int d3, int d4, int d5) {
-        return genericCalculate(d1, d2, d3, d4, d5, 3);
+        return sumXelementDices(d1, d2, d3, d4, d5, 3);
     }
 
-
+    /**
+     * calculate sum of 4
+     * 
+     * @return
+     * 	return sum of 4
+     */
     public int fours() {
-        return genericCalculateSecond(4);
+        return sumXelementDices(4);
     }
-
+    
+    /**
+     * calculate sum of 5
+     * 
+     * @return
+     * 	return sum of 5
+     */
     public int fives() {
-        return genericCalculateSecond(5);
+        return sumXelementDices(5);
     }
 
+    /**
+     * calculate sum of 6
+     * 
+     * @return
+     * 	return sum of 6
+     */
     public int sixes() {
-        return genericCalculateSecond(6);
+        return sumXelementDices(6);
     }
     /**
      * calculate score with one pair 
@@ -132,9 +197,9 @@ public class Yatzy {
      	
     	//filter to save elements of two or three repetitions
     	Optional<Integer> totalElements= result.entrySet().stream()
-				  .filter(e -> e.getValue()>=2 && e.getValue()<=3 )
-				  .map(e-> e.getKey())
-				  .reduce(Integer::sum);
+														  .filter(e -> e.getValue()>=2 && e.getValue()<=3 )
+														  .map(e-> e.getKey())
+														  .reduce(Integer::sum);
     	if (totalElements.isPresent()) {
     		return totalElements.get()*2;
     	}else {
@@ -175,7 +240,7 @@ public class Yatzy {
     	}
     }
     /**
-     * score Three Of AKind 
+     * score Three Of A Kind 
      * @param d1
      * 		dice 1
      * @param d2
@@ -200,15 +265,24 @@ public class Yatzy {
     	
     	return totalElements.get()*3;
     }
-
+    /**
+     * suite of number
+     * @param d1
+     * @param d2
+     * @param d3
+     * @param d4
+     * @param d5
+     * @return
+     * 	result 15 
+     */
     public static int smallStraight(int d1, int d2, int d3, int d4, int d5) {
         int[] tallies = initCountsArrray(d1, d2, d3, d4, d5);
-        return largeSmallStraight(tallies, 0, 15);
+        return largeSmallStraight(tallies, 0, POINT_SMALL_STRAIGHT);
     }
 
     public static int largeStraight(int d1, int d2, int d3, int d4, int d5) {
         int[] tallies = initCountsArrray(d1, d2, d3, d4, d5);
-        return largeSmallStraight(tallies, 1, 20);
+        return largeSmallStraight(tallies, 1, POINT_LARGE_STRAIGHT);
     }
 
     /**
@@ -252,22 +326,72 @@ public class Yatzy {
         counts[d5 - 1]++;
         return counts;
     }
-
-    private static int genericCalculate(int d1, int d2, int d3, int d4, int d5, int x) {
+    
+    /**
+     * 	calculate sum of element x in dices
+     * @param d1
+     * 		dice 1
+     * @param d2
+     * 		dice 2
+     * @param d3
+     * 		dice 3
+     * @param d4
+     * 		dice 4
+     * @param d5
+     * 		dice 5
+     * @param x
+     * 		element to sum 
+     * @return
+     * 		sum of element x in dices
+     */
+    private static int sumXelementDices(int d1, int d2, int d3, int d4, int d5, int x) {
         int[] dice = {d1, d2, d3, d4, d5};
+        
+        //TODO
+        Stream.of(d1, d2, d3, d4, d5).mapToInt(a->a).sum();
         return Arrays.stream(dice).filter(e -> e == x).sum();
     }
-
-    private int genericCalculateSecond(int x) {
-        return Arrays.stream(this.dice).filter(e -> e == x).sum();
+    
+    /**
+     * 	calculate sum of element x in dices
+     * @param x
+     * 		element to sum 
+     * @return
+     * 		sum of element x in dices
+     */
+    private int sumXelementDices(int x) {
+    	return Arrays.stream(this.dice).filter(e -> e == x).sum();
     }
-
-    public static int largeSmallStraight(int[] tallies, int starterIndex, int result) {
+    
+    /**
+     * check if each element exists one 
+     * @param tallies
+     * @param starterIndex
+     * @param result
+     * @return
+     */
+    private static int largeSmallStraight(int[] tallies, int starterIndex, int result) {
         if (tallies[0 + starterIndex] == 1 && tallies[1 + starterIndex] == 1 && tallies[2 + starterIndex] == 1 && tallies[3] == 1 && tallies[4 + starterIndex] == 1)
             return result;
         return 0;
     }
-    
+    /**
+     * getMapsNumberOfDuplicateElementsDices
+     * key : element of dices
+     * value : number of repetitions of this elements
+     * @param d1
+     * 		dice 1
+     * @param d2
+     * 		dice 2
+     * @param d3
+     * 		dice 3
+     * @param d4
+     * 		dice 4
+     * @param d5
+     * 		dice 5
+     * @return
+     * 		map of number of duplicates elements
+     */
     private static Map<Integer, Long> getMapsNumberOfDuplicateElementsDices(int d1, int d2, int d3, int d4, int d5) {
 		Map<Integer, Long> result = Stream.of(d1,d2,d3,d4,d5)
 										  .collect(Collectors
