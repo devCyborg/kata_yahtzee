@@ -161,18 +161,15 @@ public class Yatzy {
     	Map<Integer, Long> result = getMapsNumberOfDuplicateElementsDices(d1, d2, d3, d4, d5);
     	
     	//get List of duplicated twice only (list of pairs)
-    	List<Integer> listValuesDuplicates= result.entrySet().stream()
+    	Optional<Integer> maxOfPairs = result.entrySet().stream()
     								.filter(e -> e.getValue()==2)
     								.map(e-> e.getKey())
-    								.collect(Collectors.toList());
+    								.max(Comparator.naturalOrder());
     	//get MaxOfPairs
-    	Optional<Integer> maxOfPairs = listValuesDuplicates.stream().max(Comparator.naturalOrder());
-    	int maxPairs=0;
     	if (maxOfPairs.isPresent()) {
-    		maxPairs=maxOfPairs.get();
+    		return maxOfPairs.get()*2;
     	}
-    		
-     	return maxPairs*2;
+     	return 0;
  
     }
     /**
@@ -197,7 +194,7 @@ public class Yatzy {
      	
     	//filter to save elements of two or three repetitions
     	Optional<Integer> totalElements= result.entrySet().stream()
-														  .filter(e -> e.getValue()>=2 && e.getValue()<=3 )
+														  .filter(e -> e.getValue()==2 || e.getValue()==3 ) //save elements of repetiton 2 or 3
 														  .map(e-> e.getKey())
 														  .reduce(Integer::sum);
     	if (totalElements.isPresent()) {
@@ -228,13 +225,13 @@ public class Yatzy {
     	Map<Integer, Long> result = getMapsNumberOfDuplicateElementsDices(d1, d2, d3, d4, d5);
     	
     	//filter to save elements of 4 repetitions
-    	Optional<Integer> totalElements= result.entrySet().stream()
-				  .filter(e -> e.getValue()==4)
-				  .map(e-> e.getKey())
-				  .findFirst(); //one element for 4 repetitions
+    	Optional<Integer> element= result.entrySet().stream()
+														  .filter(e -> e.getValue()==4) //filter for element with value 4
+														  .map(e-> e.getKey())
+														  .findFirst(); //one element for 4 repetitions
 				  
-    	if (totalElements.isPresent()) {
-    		return totalElements.get()*4;
+    	if (element.isPresent()) {
+    		return element.get()*4;
     	}else {
     		return 0;
     	}
@@ -259,11 +256,14 @@ public class Yatzy {
     	Map<Integer, Long> result = getMapsNumberOfDuplicateElementsDices(d1, d2, d3, d4, d5);
     		
     	Optional<Integer> totalElements= result.entrySet().stream()
-				  .filter(e -> e.getValue()>=3 && e.getValue()<=5 )
-				  .map(e-> e.getKey())
-				  .reduce(Integer::sum);
-    	
-    	return totalElements.get()*3;
+														  .filter(e -> e.getValue()>=3 && e.getValue()<=5 ) //save element between 3 and 5 =>(3.4.5)
+														  .map(e-> e.getKey())
+														  .reduce(Integer::sum);
+    	if (totalElements.isPresent()) {
+    		return totalElements.get()*3;
+    	}else {
+    		return 0;
+    	}
     }
     /**
      * sequence number (not max)
